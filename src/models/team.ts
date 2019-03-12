@@ -1,13 +1,15 @@
 class Team {
 
-    public id: number;
-    public name: string;
-    public score: number;
+    public id?: number;
+    public label?: string;
+    public playersNb?: number;
+    public score?: number;
 
-    constructor(id: number, name: string, score: number) {
+    constructor(id?: number, label?: string, playersNb?: number, score?: number) {
         this.id = id;
-        this.name = name;
-        this.score = score;
+        this.label = label;
+        score ? this.score = score : 0;
+        playersNb ? this.playersNb = playersNb : 0
     }
 }
 

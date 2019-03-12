@@ -1,6 +1,12 @@
-import app from "./app";
-const PORT = process.env.PORT || 3001;
+import App from './app';
+import MatchSocket from "./sockets/match.socket";
 
-app.listen(PORT, () => {
-    console.log('Main app listening on port ' + PORT);
-});
+const app = new App(
+    [],
+    [
+        MatchSocket
+    ],
+    8095,
+);
+
+app.listen();

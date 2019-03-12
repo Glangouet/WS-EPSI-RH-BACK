@@ -1,14 +1,19 @@
 import Team from "./team";
-import MatchConfig from "./match-config";
 
 class Match {
 
     public teamFirst: Team;
     public teamSecond: Team;
+    public startDate: number;
+    public endDate: number;
+    public label: string;
 
-    constructor(matchConfig: MatchConfig) {
-        this.teamFirst = new Team(matchConfig.teamIdFirst, matchConfig.teamNameFirst, 0);
-        this.teamSecond = new Team(matchConfig.teamIdSecond, matchConfig.teamNameSecond, 0);
+    constructor(teamFirst: Team, teamSecond: Team, label: string, startDate: number, endDate: number) {
+        this.teamFirst = teamFirst;
+        this.teamSecond = teamSecond;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.label = label;
     }
 }
 
