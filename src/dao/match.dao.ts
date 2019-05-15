@@ -29,13 +29,14 @@ class MatchDao implements DaoInterface {
     }
 
     addMatch(match: Match) {
+        console.log(match);
         this.db.run(`INSERT INTO match(team1_id, team2_id, team1_score, team2_score, label, start_date, end_date)
         VALUES(?, ?, ?, ?, ?, ?, ?)`,
             [
-                match.teamFirst.id,
-                match.teamSecond.id,
-                match.teamFirst.score,
-                match.teamSecond.score,
+                match.team_first.id,
+                match.team_second.id,
+                match.team_first.score,
+                match.team_second.score,
                 match.label,
                 match.startDate,
                 match.endDate
@@ -59,7 +60,7 @@ class MatchDao implements DaoInterface {
         });
     }
 
-    getMatchList(): Promise<any> {
+    getMatchList(): Promise<Match[]> {
         return new Promise(resolve => {
             this.db.all(`SELECT * FROM match`, [], (err, rows) => {
                 if (err) {

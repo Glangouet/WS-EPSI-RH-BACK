@@ -2,13 +2,15 @@ import {RolesEnum} from "../enum/roles.enum";
 
 class User {
     id: number;
-    username: string;
+    email: string;
+    password: string;
     role: string;
 
-    constructor(id?: number, username?: string, role?: string) {
+    constructor(id?: number, email?: string, role?: string, password?: string) {
         role ? this.role = role : RolesEnum.ROLE_USER;
         this.id = id;
-        this.username = username;
+        this.email = email;
+        password ? this.password = password : null;
     }
 }
 

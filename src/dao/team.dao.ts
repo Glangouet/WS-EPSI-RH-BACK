@@ -35,7 +35,7 @@ class TeamDao implements DaoInterface {
             })
     }
 
-    getTeamById(id: number): Promise<any> {
+    public async getTeamById(id: number): Promise<any> {
         return new Promise(resolve => {
             this.db.get(`SELECT * FROM team WHERE id=${id}`,
                 (err, rows) => {
