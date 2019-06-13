@@ -26,15 +26,30 @@ class MatchSocket {
         this.socket.on('new_match', (match: Match) => {
             this.onNewMatch(match);
         });
-        this.socket.on('start', (data) => {
-            //
-        });
-        this.socket.on('end', (data) => {
-            //
-        });
         this.socket.on('update_match', (match: Match) => {
             this.onUpdateMatch(match);
         });
+        this.socket.on('new_score', (match: Match) => {
+            this.onNewScore(match);
+        });
+        this.socket.on('start_match', (match: Match) => {
+            this.onStartMatch(match);
+        });
+        this.socket.on('end_match', (match: Match) => {
+            this.onEndMatch(match);
+        });
+    }
+
+    private onStartMatch(match: Match) {
+        this.io.emit('start_match', match);
+    }
+
+    private onEndMatch(match: Match) {
+        this.io.emit('end_match',  match);
+    }
+
+    private onNewScore(match) {
+        this.io.emit('new_score', match);
     }
 
     private async onUpdateMatch(match: Match) {
@@ -63,6 +78,7 @@ class MatchSocket {
         this.matchService.handleGetMatchs().then(
             (matchList: Match[]) => {
                 this.io.emit('match_list', matchList);
+                this.io.emit('new_match', match);
             }
         );
     }

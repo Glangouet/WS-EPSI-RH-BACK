@@ -84,7 +84,7 @@ class MatchDao implements DaoInterface {
 
     getMatchList(): Promise<Match[]> {
         return new Promise(resolve => {
-            this.db.all(`SELECT * FROM match`, [], (err, rows) => {
+            this.db.all(`SELECT * FROM match ORDER BY id DESC`, [], (err, rows) => {
                 if (err) {
                     throw err;
                 }

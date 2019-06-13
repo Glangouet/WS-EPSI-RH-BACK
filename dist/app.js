@@ -32,18 +32,19 @@ class App {
         });
     }
     initializeSocketIo() {
+        const matchService = new match_service_1.default(this.daoList);
         socket_service_1.default.io.on('connection', (socket) => {
             const injector = {
                 io: socket_service_1.default.io,
                 socket: socket,
-                daoList: this.daoList
+                daoList: this.daoList,
+                matchService: matchService
             };
             this.sockets.forEach((name) => {
                 new name(injector);
             });
             socket.join(socket.id);
             console.log('nouvelle  connexion: ' + socket.id);
-            const matchService = new match_service_1.default(this.daoList);
             matchService.handleGetMatchs().then((matchList) => {
                 socket.emit('match_list', matchList);
             });

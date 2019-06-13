@@ -32,13 +32,26 @@ class TeamDao {
             if (err) {
                 return console.log(err.message);
             }
-            console.log('Team was added to the table.');
+            console.log('Team was added to the table!.');
         });
     }
     getTeamById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise(resolve => {
                 this.db.get(`SELECT * FROM team WHERE id=${id}`, (err, rows) => {
+                    if (err) {
+                        throw err.message;
+                    }
+                    resolve(rows);
+                });
+            });
+        });
+    }
+    getTeamByLabel(test) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(test);
+            return new Promise(resolve => {
+                this.db.get(`SELECT * FROM team WHERE label='${test}'`, (err, rows) => {
                     if (err) {
                         throw err.message;
                     }
