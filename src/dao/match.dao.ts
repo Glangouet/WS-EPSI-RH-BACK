@@ -21,7 +21,8 @@ class MatchDao implements DaoInterface {
   team2_score INTEGER,
   label VARCHAR,
   start_date TIMESTAMP,
-  end_date TIMESTAMP ,
+  end_date TIMESTAMP,
+  state VARCHAR,
   FOREIGN KEY (team1_id) REFERENCES Team (id),
   FOREIGN KEY (team2_id) REFERENCES Team (id)
   )`
@@ -30,8 +31,8 @@ class MatchDao implements DaoInterface {
 
     addMatch(match: Match) {
         console.log(match);
-        this.db.run(`INSERT INTO match(team1_id, team2_id, team1_score, team2_score, label, start_date, end_date)
-        VALUES(?, ?, ?, ?, ?, ?, ?)`,
+        this.db.run(`INSERT INTO match(team1_id, team2_id, team1_score, team2_score, label, start_date, end_date, state)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 match.team_first.id,
                 match.team_second.id,
@@ -39,7 +40,8 @@ class MatchDao implements DaoInterface {
                 match.team_second.score,
                 match.label,
                 match.startDate,
-                match.endDate
+                match.endDate,
+                match.state
             ],
             (err) => {
            if(err) {
@@ -47,6 +49,26 @@ class MatchDao implements DaoInterface {
             }
             console.log('Match was added to the table');
         })
+    }
+
+    updateMatchScore(match: Match) {
+        return new Promise((resolve, reject) => {
+            if (!match.team1_score) match.team1_score = 0;
+            if (!match.team2_score) match.team2_score = 0;
+            console.log(match);
+            this.db.run(`UPDATE match
+            SET team1_score=${match.team1_score}, team2_score=${match.team2_score}, state='${match.state}'
+            WHERE id = ${match.id};`,
+                (err) => {
+                    if (err) {
+                        reject(err);
+                        return console.log(err);
+                    }
+
+                    resolve('Match was updated to the table');
+                    console.log('Match was updated to the table');
+                });
+        });
     }
 
     getMatchById(id: number) {
@@ -75,9 +97,9 @@ class MatchDao implements DaoInterface {
         const match1 = new Match(new Team(1), new Team(2), 'Quart', new Date().getTime(), new Date().getTime());
         const match2 = new Match(new Team(1), new Team(3), 'Demi', new Date().getTime(), new Date().getTime());
         const match3 = new Match(new Team(2), new Team(3), 'Final', new Date().getTime(), new Date().getTime());
-        this.addMatch(match1);
+/*        this.addMatch(match1);
         this.addMatch(match2);
-        this.addMatch(match3);
+        this.addMatch(match3);*/
     }
 
 }

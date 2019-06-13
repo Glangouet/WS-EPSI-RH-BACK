@@ -2,6 +2,7 @@ import Team from "./team";
 
 class Match {
 
+    public id?: number;
     public team1_id?: number;
     public team2_id?: number;
     public team1_score?: number;
@@ -11,8 +12,10 @@ class Match {
     public startDate: number;
     public endDate: number;
     public label: string;
+    public state: string;
 
     constructor(team_first: Team, team_second: Team, label: string, startDate: number, endDate: number) {
+        this.state = 'en attente';
         this.team_first = team_first;
         this.team_second = team_second;
         this.startDate = startDate;

@@ -44,11 +44,13 @@ class App {
     }
 
     private initializeSocketIo() {
+        const matchService = new MatchService(this.daoList);
         SocketService.io.on('connection', (socket: socketIo.Socket) => {
             const injector = {
                 io: SocketService.io,
                 socket: socket,
-                daoList: this.daoList
+                daoList: this.daoList,
+                matchService: matchService
             };
             this.sockets.forEach((name: any) => {
                 new name(injector);
@@ -56,7 +58,6 @@ class App {
 
             socket.join(socket.id);
             console.log('nouvelle  connexion: ' + socket.id);
-            const matchService = new MatchService(this.daoList);
             matchService.handleGetMatchs().then(
                 (matchList: Match[]) => {
                     socket.emit('match_list', matchList);

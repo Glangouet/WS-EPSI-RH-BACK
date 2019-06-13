@@ -31,7 +31,7 @@ class TeamDao implements DaoInterface {
                 if(err) {
                     return console.log(err.message);
                 }
-                console.log('Team was added to the table.');
+                console.log('Team was added to the table!.');
             })
     }
 
@@ -41,6 +41,19 @@ class TeamDao implements DaoInterface {
                 (err, rows) => {
                     if(err) {
                        throw err.message;
+                    }
+                    resolve(rows);
+                });
+        });
+    }
+
+    public async getTeamByLabel(test: string): Promise<any> {
+        console.log(test);
+        return new Promise(resolve => {
+            this.db.get(`SELECT * FROM team WHERE label='${test}'`,
+                (err, rows) => {
+                    if(err) {
+                        throw err.message;
                     }
                     resolve(rows);
                 });
