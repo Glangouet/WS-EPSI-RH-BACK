@@ -23,15 +23,27 @@ class MatchSocket {
         this.socket.on('new_match', (match) => {
             this.onNewMatch(match);
         });
-        this.socket.on('start', (data) => {
-            //
-        });
-        this.socket.on('end', (data) => {
-            //
-        });
         this.socket.on('update_match', (match) => {
             this.onUpdateMatch(match);
         });
+        this.socket.on('new_score', (match) => {
+            this.onNewScore(match);
+        });
+        this.socket.on('start_match', (match) => {
+            this.onStartMatch(match);
+        });
+        this.socket.on('end_match', (match) => {
+            this.onEndMatch(match);
+        });
+    }
+    onStartMatch(match) {
+        this.io.emit('start_match', match);
+    }
+    onEndMatch(match) {
+        this.io.emit('end_match', match);
+    }
+    onNewScore(match) {
+        this.io.emit('new_score', match);
     }
     onUpdateMatch(match) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -58,6 +70,7 @@ class MatchSocket {
             console.log(match);
             this.matchService.handleGetMatchs().then((matchList) => {
                 this.io.emit('match_list', matchList);
+                this.io.emit('new_match', match);
             });
         });
     }
